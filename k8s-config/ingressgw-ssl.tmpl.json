@@ -1,0 +1,20 @@
+[{
+    "op": "add",
+    "path": "/spec/template/spec/containers/0/volumeMounts/0",
+    "value": {
+      "mountPath": "/etc/istio/$INGRESS_GW_SSL_SECRET_NAME",
+      "name": "$INGRESS_GW_SSL_SECRET_NAME",
+      "readOnly": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/spec/template/spec/volumes/0",
+    "value": {
+    "name": "$INGRESS_GW_SSL_SECRET_NAME",
+      "secret": {
+        "secretName": "$INGRESS_GW_SSL_SECRET_NAME",
+        "optional": true
+      }
+    }
+  }]

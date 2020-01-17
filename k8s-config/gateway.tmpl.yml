@@ -1,0 +1,28 @@
+# This deploys a gateway to allows traffic from external to K8S cluster both HTTP and HTTPS 
+# $ENV and $DNS will feed from jenkins variable
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: $ENV-$NAME_SPACE
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+      - "*.$ENV.$DNS"
+      port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        serverCertificate: /etc/istio/$INGRESS_GW_SSL_SECRET_NAME/tls.crt
+        privateKey: /etc/istio/$INGRESS_GW_SSL_SECRET_NAME/tls.key
+    - hosts:
+      - "*.$ENV.$DNS"
+      port:
+        number: 80
+        name: http
+        protocol: HTTP
+      tls:
+        httpsRedirect: true

@@ -1,0 +1,10 @@
+version: '3.0'
+services:
+  kubectl:
+    image: nexus.corp.dmz:8083/kubernetes-utils:latest
+    env_file: .env
+    volumes:
+      - .:/srv/app:Z
+      - ~/.kube:/root/.kube:Z
+    working_dir: /srv/app
+    entrypoint: []

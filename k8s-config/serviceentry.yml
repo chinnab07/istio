@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: proxy
+spec:
+  hosts:
+    - bh-app-proxy.corp.dmz
+  addresses:
+    - 10.51.100.245/32
+  ports:
+  - number: 8080
+    name: http
+    protocol: TCP
+  resolution: NONE
+  location: MESH_EXTERNAL

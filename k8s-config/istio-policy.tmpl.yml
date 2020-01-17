@@ -1,0 +1,44 @@
+# Enabling MTLS within $NAME_SPACE NS
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: default
+  namespace: $NAME_SPACE
+  labels:  # can't use anchors across YAML documents unfortunately
+    branch: $FEATURE_NAME
+    environment: "$ENV"
+    application: "$APP_NAME"
+    tier: "web"
+    costcenter: "$COST_CENTRE"
+    supportemail: "aunzcontinuousdeliveryteam_at_equifax.com"
+    compliancedomain: ""
+    dataclass: "2"
+    provisionedby: "jenkins"
+    byolsoftware: ""
+    buildversion: "$BUILD_VERSION"
+spec:
+  peers:
+  - mtls: {}
+
+---
+# Enabling Cluster RBAC (Authorization) on $NAME_SPACE 
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ClusterRbacConfig
+metadata:
+  name: default
+  labels:  # can't use anchors across YAML documents unfortunately
+    branch: $FEATURE_NAME
+    environment: "$ENV"
+    application: "$APP_NAME"
+    tier: "web"
+    costcenter: "$COST_CENTRE"
+    supportemail: "aunzcontinuousdeliveryteam_at_equifax.com"
+    compliancedomain: ""
+    dataclass: "2"
+    provisionedby: "jenkins"
+    byolsoftware: ""
+    buildversion: "$BUILD_VERSION"
+spec:
+  mode: 'ON_WITH_INCLUSION'
+  inclusion:
+    namespaces: ["$NAME_SPACE"]
